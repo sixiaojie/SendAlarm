@@ -101,7 +101,7 @@ func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 		basis.Log.Error(err.Error())
 		return nil
 	}
-	basis.Writefile(data,"email_json")
+	basis.Writefile(data,"conf")
 	return nil
 }
 
