@@ -23,6 +23,7 @@ func (u *BuissnessController) Insert(){
 	views.SendReturn(sr,0,"ok",SR)
 	}
 	u.Data["json"] = sr
+	u.ServeJSON()
 }
 
 
