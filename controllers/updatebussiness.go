@@ -41,5 +41,6 @@ func (u *BuissnessController) Update(){
 	temp := make(map[string]string)
 	temp["name"] = "sijie"
 	u.Data["json"] = temp
+	u.ServeJSON()
 }
 
