@@ -111,8 +111,15 @@ func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 	if err != err{
 		return err
 	}
-	if total !=1 {
+	if total >2 {
 		return errors.New("同个业务发现有多个配置")
+	}
+	if total == 0{
+		err := InsertBussinessItemElasticsearch(b)
+		if err != nil{
+			return err
+		}
+		return nil
 	}
 	indexname := basis.GetBussinessConfIndexName()
 	url := "http://"+basis.Host+":"+basis.Port+"/"+indexname+"/"+idname+"/_update"
