@@ -188,7 +188,7 @@ func ParserIdJson(body []byte)(id string,err error){
 				return "",errors.New("id字段不是string，无法解析")
 			}
 		default:
-			return "",errors.New("hits字段无法解析")
+			return "",errors.New("hits中数组字段无法解析")
 		}
 
 	default:
