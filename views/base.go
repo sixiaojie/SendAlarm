@@ -15,7 +15,7 @@ func SendReturn(b Base,code int,status string,msg map[string]interface{})(Base){
 	return b
 }
 
-func (b *Base)MakeReturnVersion()(*Base){
+func (b *Base)MakeReturnVersion(){
 	version := "xxxx"
 	b.Version = version
 }
