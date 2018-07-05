@@ -111,4 +111,20 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["SendAlarm/controllers:BuissnessController"] = append(beego.GlobalControllerRouter["SendAlarm/controllers:BuissnessController"],
+		beego.ControllerComments{
+			Method: "POST",
+			Router: `/insert`,
+			AllowHTTPMethods: []string{"POST"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["SendAlarm/controllers:NameController"] = append(beego.GlobalControllerRouter["SendAlarm/controllers:NameController"],
+		beego.ControllerComments{
+			Method: "Update",
+			Router: `/update`,
+			AllowHTTPMethods: []string{"POST"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }

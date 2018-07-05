@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"email/controllers"
+	"SendAlarm/controllers"
 
 	"github.com/astaxie/beego"
 )
@@ -25,9 +25,9 @@ func init() {
 				&controllers.UserController{},
 			),
 		),
-		beego.NSNamespace("/name",
+		beego.NSNamespace("/bussiness",
 			beego.NSInclude(
-				&controllers.NameController{},
+				&controllers.BuissnessController{},
 			),
 		),
 	)

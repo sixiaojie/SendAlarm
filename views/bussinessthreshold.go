@@ -43,7 +43,7 @@ type UpdateResult struct {
 	Shard map[string]int
 }
 
-
+//这里将传入的值进行判断，如果存在就舍弃。
 func SearchBussinessItem(b *BussinessThreshold) (total int64,err error,idname string){
 	indexname := basis.GetBussinessConfIndexName()
 	url := "http://"+basis.Host+":"+basis.Port+"/"+indexname+"/_search"
@@ -91,9 +91,15 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,err error,idname st
 
 //这里将配置更新到日志中，通过logstash更新到es中
 func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
+	length,err,_ :=SearchBussinessItem(b)
+	if length >=1{
+		basis.Log.Warning("已存在，跳过")
+		return errors.New("已经存在，将忽略")
+	}
 	data,err := json.Marshal(b)
 	if err != nil{
 		basis.Log.Error(err.Error())
+		return nil
 	}
 	basis.Writefile(data,"email_json")
 	return nil
@@ -191,7 +197,7 @@ func ParserIdJson(body []byte)(id string,err error){
 	return "",nil
 }
 
-
+//更新后，判断更新是否成功。
 func UpdateThresholdReturnResult(b []byte)(err error){
 	var updateresult UpdateResult
 	err = json.Unmarshal(b,&updateresult)
