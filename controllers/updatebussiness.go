@@ -38,6 +38,8 @@ func (u *BuissnessController) Update(){
 		SR["message"] = "success"
 		views.SendReturn(sr,0,"ok",SR)
 	}
-	u.Data["json"] = sr
+	temp := make(map[string]string)
+	temp["name"] = "sijie"
+	u.Data["json"] = temp
 }
 
