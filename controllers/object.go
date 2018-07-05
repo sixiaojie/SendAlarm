@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"email/models"
+	"SendAlarm/models"
 	"encoding/json"
 
 	"github.com/astaxie/beego"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "email/routers"
+	_ "SendAlarm/routers"
 
 	"github.com/astaxie/beego"
 	"fmt"

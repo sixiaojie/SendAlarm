@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"email/models"
+	"SendALarm/models"
 	"encoding/json"
 
 	"github.com/astaxie/beego"
