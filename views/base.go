@@ -1,20 +1,21 @@
 package views
 
 type Base struct {
-	Version string `json:"version"`
-	Code int `json:"code"`
-	Status string `json:"status"`
-	Msg map[string]interface{} `json:"msg"`
+	Version string
+	Code int
+	Status string
+	Msg map[string]interface{}
 }
 
-func SendReturn(b Base,code int,status string,msg map[string]interface{}){
+func SendReturn(b Base,code int,status string,msg map[string]interface{})(Base){
 	b.MakeReturnVersion()
 	b.Code = code
 	b.Status = status
 	b.Msg = msg
+	return b
 }
 
-func (b *Base)MakeReturnVersion(){
+func (b *Base)MakeReturnVersion()(*Base){
 	version := "xxxx"
 	b.Version = version
 }

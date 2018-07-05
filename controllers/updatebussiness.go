@@ -17,10 +17,10 @@ func (u *BuissnessController) Insert(){
 	err := views.InsertBussinessItemElasticsearch(&buss)
 	if err != nil {
 		SR["message"] = err.Error()
-		views.SendReturn(sr, 4022, "Insert failed", SR)
+		sr = views.SendReturn(sr, 4022, "Insert failed", SR)
 	} else{
-	SR["message"] = "success"
-	views.SendReturn(sr,0,"ok",SR)
+		SR["message"] = "success"
+		sr = views.SendReturn(sr,0,"ok",SR)
 	}
 	u.Data["json"] = sr
 	u.ServeJSON()
@@ -34,10 +34,10 @@ func (u *BuissnessController) Update(){
 	err := views.UpdateBussinessItemElasticsearch(&buss)
 	if err != nil {
 		SR["message"] = err.Error()
-		views.SendReturn(sr, 4023, "Update failed", SR)
+		sr = views.SendReturn(sr, 4023, "Update failed", SR)
 	} else{
 		SR["message"] = "success"
-		views.SendReturn(sr,0,"ok",SR)
+		sr = views.SendReturn(sr,0,"ok",SR)
 	}
 	u.Data["json"] = sr
 	u.ServeJSON()
