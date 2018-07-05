@@ -7,6 +7,7 @@ import(
 	"net/http"
 	"io/ioutil"
 	"github.com/pkg/errors"
+	"fmt"
 )
 
 type value map[string]string
@@ -173,6 +174,7 @@ func ParserIdJson(body []byte)(id string,err error){
 	if err != nil {
 		return "",nil
 	}
+	fmt.Println(code.Hits)
 	switch v:= code.Hits["hits"].(type) {
 	case []interface {}:
 		length := len(v)
