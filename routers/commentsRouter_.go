@@ -113,7 +113,7 @@ func init() {
 
 	beego.GlobalControllerRouter["SendAlarm/controllers:BuissnessController"] = append(beego.GlobalControllerRouter["SendAlarm/controllers:BuissnessController"],
 		beego.ControllerComments{
-			Method: "POST",
+			Method: "Insert",
 			Router: `/insert`,
 			AllowHTTPMethods: []string{"POST"},
 			MethodParams: param.Make(),
