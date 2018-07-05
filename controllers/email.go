@@ -2,7 +2,7 @@ package controllers
 import (
 "github.com/astaxie/beego"
 	"encoding/json"
-	"email/views"
+	"SendAlarm/views"
 )
 
 type EmailController struct {
