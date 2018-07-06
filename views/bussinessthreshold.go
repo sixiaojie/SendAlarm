@@ -180,6 +180,9 @@ func ParserIdJson(body []byte)(id string,err error){
 	if err != nil {
 		return "",nil
 	}
+	if code.Hits == nil{
+		return "",nil
+	}
 	switch v:= code.Hits["hits"].(type) {
 	case []interface {}:
 		length := len(v)
