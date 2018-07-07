@@ -9,7 +9,7 @@ type EmailController struct {
 	beego.Controller
 }
 //这里接受信息，并且返回信息。
-func (e *EmailController) Post(){
+func (e *EmailController) Send(){
 	var eml views.EmailType
 	var sr views.Base
 	SR := make(map[string]interface{})
@@ -17,10 +17,11 @@ func (e *EmailController) Post(){
 	code,err := views.SendInit(eml)
 	if err != nil{
 		SR["message"] = err.Error()
-		views.SendReturn(sr,code,"Failed",SR)
+		sr = views.SendReturn(sr,code,"Failed",SR)
 	}else{
 		SR["message"] = "success"
-		views.SendReturn(sr,0,"ok",SR)
+		sr = views.SendReturn(sr,0,"ok",SR)
 	}
 	e.Data["json"] = sr
+	e.ServeJSON()
 }

@@ -32,6 +32,7 @@ type BussinessThreshold struct {
 	SecondBussiness string
 	ThirdBussiness string
 	Threshold int
+	Scope int
 }
 
 type UpdateResult struct {
@@ -44,9 +45,7 @@ type UpdateResult struct {
 }
 
 //这里将传入的值进行判断，如果存在就舍弃。
-func SearchBussinessItem(b *BussinessThreshold) (total int64,err error,idname string){
-	indexname := basis.GetBussinessConfIndexName()
-	url := "http://"+basis.Host+":"+basis.Port+"/"+indexname+"/_search"
+func SearchBussinessItem(b *BussinessThreshold) (total int64,scope int64,err error,idname string){
 	var s []term
 	s = append(s,term{"term":{"FirstBussiness.keyword":{"value":b.FirstBussiness}}})
 	s = append(s,term{"term":{"SecondBussiness.keyword":{"value":b.SecondBussiness}}})
@@ -55,46 +54,53 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,err error,idname st
 	bytesDate,err := json.Marshal(t)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,err,""
+		return 0,0,err,""
 	}
 	reader := bytes.NewReader([]byte(bytesDate))
-	request, err := http.NewRequest("POST", url, reader)
+	request, err := http.NewRequest("POST", basis.Business_url, reader)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,err,""
+		return 0,0,err,""
 	}
 	client := http.Client{}
 	resp, err := client.Do(request)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,err,""
+		return 0,0,err,""
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,err,""
+		return 0,0,err,""
 	}
 	//str := (*string)(unsafe.Pointer(&respBytes))
 	//fmt.Println(*str)
-	total,err = ParserTotalJson(respBytes)
+	total,scope,err = ParserTotalJson(respBytes)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,err,""
+		return 0,scope,err,""
 	}
 	idname,err = ParserIdJson(respBytes)
 	if err != nil{
 		basis.Log.Error(err.Error())
-		return total,err,""
+		return total,scope,err,""
 	}
-	return total,nil,idname
+	return total,scope,nil,idname
 }
 
 //这里将配置更新到日志中，通过logstash更新到es中
 func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
-	length,err,_ :=SearchBussinessItem(b)
+	length,_,err,_ :=SearchBussinessItem(b)
 	if length >=1{
 		basis.Log.Warning("已存在，跳过")
 		return errors.New("已经存在，将忽略")
+	}
+	if b.Scope ==0{
+		DefaultScope,err := basis.Appconf().Int("DefaultScope")
+		if err != nil{
+			b.Scope = 0
+		}
+		b.Scope = DefaultScope
 	}
 	data,err := json.Marshal(b)
 	if err != nil{
@@ -107,7 +113,7 @@ func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 
 //这里更新es上已经存在的记录，如果不存在，就插入到es中
 func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
-	total,err,idname := SearchBussinessItem(b)
+	total,_,err,_ := SearchBussinessItem(b)
 	if err != err{
 		return err
 	}
@@ -121,17 +127,18 @@ func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 		}
 		return nil
 	}
-	indexname := basis.GetBussinessConfIndexName()
-	url := "http://"+basis.Host+":"+basis.Port+"/"+indexname+"/"+idname+"/_update"
 	temp := make(map[string]map[string]int)
 	temp["doc"]["Threshold"] = b.Threshold
+	if b.Scope !=0 {
+		temp["doc"]["Scope"] = b.Scope
+	}
 	bytesDate,err := json.Marshal(temp)
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return err
 	}
 	reader := bytes.NewReader([]byte(bytesDate))
-	request, err := http.NewRequest("POST", url, reader)
+	request, err := http.NewRequest("POST", basis.Business_url, reader)
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return err
@@ -154,26 +161,44 @@ func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 	return nil
 }
 
-//这里得到总数
-func ParserTotalJson(Total []byte)(total int64,err error){
+//这里得到总数，如果是搜索业务的范围时间，会返回scope进行判断
+func ParserTotalJson(Total []byte)(total int64,scope int64,err error){
 	var code Code
 	err = json.Unmarshal(Total,&code)
+
 	if err != nil {
-		return 0,nil
+		return 0,scope,nil
 	}
 	switch v := code.Hits["total"].(type){
 	case int:
 		total = int64(v)
 	case float64:
 		total = int64(float64(v))
+		if total == 1{
+			switch w := code.Hits["hits"].(type) {
+			case []interface{}:
+				switch w1 := w[0].(type) {
+				case map[string]interface{}:
+					switch w2 := w1["_source"].(type) {
+					case map[string]interface{}:
+						switch w3 := w2["Scope"].(type) {
+						case int:
+							scope = int64(w3)
+							return total,scope,nil
+						}
+					}
+				}	
+			default:
+				scope = 0
+			}
+		}
 	default:
 		total = 0
 	}
-	return total,err
+	return total,scope,err
 }
 
 //这里得到Update需要的doc id
-
 func ParserIdJson(body []byte)(id string,err error){
 	var code Code
 	err = json.Unmarshal(body,&code)

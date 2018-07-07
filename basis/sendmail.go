@@ -26,7 +26,8 @@ func (e *Email_Server) init(l *logs.BeeLogger){
 
 //这里将发送的人，改成一个一个的发送。
 
-func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs.BeeLogger) {
+func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs.BeeLogger){
+	e.init(l)
 	m := gomail.NewMessage()
 	//m.SetHeader("From", Email_user)
 	m.SetAddressHeader("From",e.User,alias)
