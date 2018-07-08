@@ -23,7 +23,7 @@ type EmailType struct {
 	Subject string
 	Message string
 	Bussiness string
-	Localtime int64 `json:"localtime"`
+	Localtime int64
 	FirstBussiness string
 	SecondBussiness string
 	ThirdBussiness string
@@ -89,7 +89,9 @@ func StoreElasticsearch(e *EmailType)(err error){
 		return err
 	}
 	fmt.Println("2")
+	fmt.Println("2.1")
 	e.Localtime = time.Now().Unix()
+	fmt.Println("2.2")
 	data,err := json.Marshal(e)
 	fmt.Println("3")
 	if err != nil{
