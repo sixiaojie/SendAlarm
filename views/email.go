@@ -41,11 +41,15 @@ func SendInit(e EmailType) (errcode int,err error){
 	if err != nil {
 		return -1,err
 	}
+	fmt.Println("Before Sending mail program")
 	_,err = SendEmails(&e)
+	fmt.Println("After Sending mail program")
 	if err != nil{
 		return 10001,err
 	}
+	fmt.Println("Before Store ela program")
 	err = StoreElasticsearch(&e)
+	fmt.Println("After Store ela program")
 	if err != nil {
 		return 10002,err
 	}
@@ -53,6 +57,7 @@ func SendInit(e EmailType) (errcode int,err error){
 }
 // 这里与阈值对比，然后决定发邮件
 func SendEmails(e *EmailType)(code int64,err error){
+	fmt.Println("sending program begin")
 	var thres *BussinessThreshold
 	thres.ThirdBussiness = e.ThirdBussiness
 	thres.SecondBussiness = e.SecondBussiness
@@ -62,6 +67,7 @@ func SendEmails(e *EmailType)(code int64,err error){
 		return 6044,err
 	}
 	total,err := SearchElasticsearch(e,scope)
+	fmt.Println("sendemail SearchEla")
 	if err != nil{
 		return total,err
 	}
