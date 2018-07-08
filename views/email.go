@@ -61,6 +61,7 @@ func SendEmails(e *EmailType)(code int64,err error){
 	if err != nil{
 		return total,err
 	}
+	fmt.Println(total,threshold)
 	Email := basis.Email_Server{}
 	if total ==0{
 		Email.SendMail(basis.Alarm,e.Subject,e.Message,e.User,e.Cc,basis.Logger)
