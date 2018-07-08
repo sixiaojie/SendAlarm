@@ -47,9 +47,9 @@ type UpdateResult struct {
 //这里将传入的值进行判断，如果存在就舍弃。
 func SearchBussinessItem(b *BussinessThreshold) (total int64,scope,threshold int64,err error,idname string){
 	var s []term
-	s = append(s,term{"term":{"FirstBussiness.keyword":{"value":b.FirstBussiness}}})
-	s = append(s,term{"term":{"SecondBussiness.keyword":{"value":b.SecondBussiness}}})
-	s = append(s,term{"term":{"ThirdBussiness.keyword":{"value":b.ThirdBussiness}}})
+	s = append(s,term{"term":{"FirstBussiness":{"value":b.FirstBussiness}}})
+	s = append(s,term{"term":{"SecondBussiness":{"value":b.SecondBussiness}}})
+	s = append(s,term{"term":{"ThirdBussiness":{"value":b.ThirdBussiness}}})
 	t := query{"query":{"bool":{"must":s}}}
 	bytesDate,err := json.Marshal(t)
 	if err != nil {
