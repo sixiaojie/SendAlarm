@@ -31,7 +31,7 @@ func FindLog(item string) string{
 //这里得到业务日志的索引名字
 func GetIndexName() string{
 	now := time.Now().Format("2006.01")
-	return Appconf().String("IndexName")+"-"+now
+	return Appconf().String("AlarmConfIndexName")+"-"+now
 }
 
 

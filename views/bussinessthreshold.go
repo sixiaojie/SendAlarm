@@ -7,7 +7,6 @@ import(
 	"net/http"
 	"io/ioutil"
 	"github.com/pkg/errors"
-	"fmt"
 )
 
 type value map[string]string
@@ -74,18 +73,12 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,scope int64,err err
 		basis.Log.Error(err.Error())
 		return 0,0,err,""
 	}
-	//str := (*string)(unsafe.Pointer(&respBytes))
-	//fmt.Println(*str)
-	fmt.Println("Begin ParserTotalJson")
 	total,scope,err = ParserTotalJson(respBytes)
-	fmt.Println("After ParserTotalJson")
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return 0,scope,err,""
 	}
-	fmt.Println("Begin ParserIdJson")
 	idname,err = ParserIdJson(respBytes)
-	fmt.Println("After ParserIdJson")
 	if err != nil{
 		basis.Log.Error(err.Error())
 		return total,scope,err,""
