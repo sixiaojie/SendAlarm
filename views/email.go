@@ -83,16 +83,20 @@ func SendEmails(e *EmailType)(code int64,err error){
 
 //这里存储信息到Elasticsearch
 func StoreElasticsearch(e *EmailType)(err error){
+	fmt.Println("1")
 	err = e.analyse()
 	if err != nil{
 		return err
 	}
+	fmt.Println("2")
 	e.Localtime = time.Now().Unix()
 	data,err := json.Marshal(e)
+	fmt.Println("3")
 	if err != nil{
 		basis.Log.Error(err.Error())
 		return err
 	}
+	fmt.Println("4")
 	basis.Writefile(data,"access")
 	return nil
 }
