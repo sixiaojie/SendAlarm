@@ -109,7 +109,7 @@ func SearchElasticsearch(e *EmailType,scope int64)(times int64,err error){
 	s = append(s,term{"term":{"ThirdBussiness.keyword":{"value":e.ThirdBussiness}}})
 	s = append(s,term{"term":{"Status.keyword":{"value":e.Status}}})
 	s = append(s,term{"term":{"Msg.keyword":{"value":e.Msg}}})
-	s = append(s,term{"range":{"localtime":{"gt":strconv.FormatInt(localtime,10)}}})
+	s = append(s,term{"range":{"Localtime":{"gt":strconv.FormatInt(localtime,10)}}})
 	t := query{"query":{"bool":{"must":s}}}
 	bytesDate,err := json.Marshal(t)
 	if err != nil {
