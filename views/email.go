@@ -59,8 +59,11 @@ func SendInit(e EmailType) (errcode int,err error){
 func SendEmails(e *EmailType)(code int64,err error){
 	fmt.Println("sending program begin")
 	var thres *BussinessThreshold
+	fmt.Println("1")
 	thres.ThirdBussiness = e.ThirdBussiness
+	fmt.Println("2")
 	thres.SecondBussiness = e.SecondBussiness
+	fmt.Println("3")
 	thres.FirstBussiness = e.FirstBussiness
 	fmt.Println("Begin SearchBussinessItem")
 	threshold,scope,err,_ := SearchBussinessItem(thres)
