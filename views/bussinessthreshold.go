@@ -53,6 +53,8 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,scope,threshold int
 	s = append(s,term{"term":{"ThirdBussiness":{"value":b.ThirdBussiness}}})
 	t := query{"query":{"bool":{"must":s}}}
 	bytesDate,err := json.Marshal(t)
+	fmt.Println(bytesDate)
+	fmt.Println(string(bytesDate))
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return 0,0,threshold,err,""
