@@ -60,6 +60,7 @@ func SendEmails(e *EmailType)(code int64,err error){
 	fmt.Println("sending program begin")
 	var thres *BussinessThreshold
 	fmt.Println("1")
+	fmt.Println(e.FirstBussiness,e.SecondBussiness,e.ThirdBussiness)
 	thres.ThirdBussiness = e.ThirdBussiness
 	fmt.Println("2")
 	thres.SecondBussiness = e.SecondBussiness
