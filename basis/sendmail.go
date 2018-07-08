@@ -3,6 +3,7 @@ package basis
 import(
 	"gopkg.in/gomail.v2"
 	"github.com/astaxie/beego/logs"
+	"fmt"
 )
 
 type Email_Server struct {
@@ -34,8 +35,11 @@ func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs
 	for i:=0 ;i<len(cc);i++{
 		to = append(to,cc[i])
 	}
+	fmt.Println(to)
 	for i:= 0;i<len(to);i++{
 		go func(){
+			fmt.Println(i)
+			fmt.Println(to[i])
 			m.SetHeader("To",to[i])
 			m.SetHeader("Subject", subject)
 			d := gomail.NewDialer(e.Host, e.Port, e.User, e.Password)
