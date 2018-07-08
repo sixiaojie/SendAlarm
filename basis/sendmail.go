@@ -4,6 +4,7 @@ import(
 	"gopkg.in/gomail.v2"
 	"github.com/astaxie/beego/logs"
 	"fmt"
+	"SendAlarm/models"
 )
 
 type Email_Server struct {
@@ -28,31 +29,25 @@ func (e *Email_Server) init(l *logs.BeeLogger){
 //这里将发送的人，改成一个一个的发送。
 
 func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs.BeeLogger){
-	e.init(l)
-	m := gomail.NewMessage()
-	//m.SetHeader("From", Email_user)
-	m.SetAddressHeader("From",e.User,alias)
 	for i:=0 ;i<len(cc);i++{
 		to = append(to,cc[i])
 	}
 	fmt.Println(to)
 	for i:= 0;i<len(to);i++{
-		/*
-		go func(){
-			fmt.Println(i)
-			fmt.Println(to[i])
-			m.SetHeader("To",to[i])
-			m.SetHeader("Subject", subject)
-			d := gomail.NewDialer(e.Host, e.Port, e.User, e.Password)
-			if err := d.DialAndSend(m); err != nil {
-				//Writefile("Sendmail "+to,errors.New("success"))
-				msg := "Sendmail "+to[i]+err.Error()
-				l.Error(msg)
-			}
-		}()
-		*/
-		fmt.Println(to[i])
+		go Email_Accept(e,l,alias,subject,to[i])
 	}
 }
 
-
+func Email_Accept(e *Email_Server,l *logs.BeeLogger,alias,subject,user string){
+	e.init(l)
+	m := gomail.NewMessage()
+	m.SetAddressHeader("From",e.User,alias)
+	m.SetHeader("To",user)
+	m.SetHeader("Subject", subject)
+	d := gomail.NewDialer(e.Host, e.Port, e.User, e.Password)
+	if err := d.DialAndSend(m); err != nil {
+		//Writefile("Sendmail "+to,errors.New("success"))
+		msg := "Sendmail "+user+err.Error()
+		l.Error(msg)
+	}
+}
