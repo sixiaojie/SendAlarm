@@ -7,6 +7,7 @@ import(
 	"net/http"
 	"io/ioutil"
 	"github.com/pkg/errors"
+	"fmt"
 )
 
 type value map[string]string
@@ -200,6 +201,7 @@ func ParserTotalJson(Total []byte)(total int64,scope,threshold int64,err error){
 func ParserIdJson(body []byte)(id string,err error){
 	var code Code
 	err = json.Unmarshal(body,&code)
+	fmt.Println(code)
 	if err != nil {
 		return "",nil
 	}
