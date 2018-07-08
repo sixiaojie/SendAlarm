@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3b536622-f326-4072-a98c-633534c8bf50" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/basis/sendmail.go" afterPath="$PROJECT_DIR$/basis/sendmail.go" />
-      <change beforePath="$PROJECT_DIR$/basis/writefile.go" afterPath="$PROJECT_DIR$/basis/writefile.go" />
-      <change beforePath="$PROJECT_DIR$/conf/app.conf" afterPath="$PROJECT_DIR$/conf/app.conf" />
-      <change beforePath="$PROJECT_DIR$/controllers/email.go" afterPath="$PROJECT_DIR$/controllers/email.go" />
       <change beforePath="$PROJECT_DIR$/views/bussinessthreshold.go" afterPath="$PROJECT_DIR$/views/bussinessthreshold.go" />
       <change beforePath="$PROJECT_DIR$/views/email.go" afterPath="$PROJECT_DIR$/views/email.go" />
     </list>
@@ -22,9 +18,11 @@
       <file leaf-file-name="bussinessthreshold.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/bussinessthreshold.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" column="14" lean-forward="true" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
-              <folding />
+            <state relative-caret-position="133">
+              <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+              <folding>
+                <element signature="e#15#119#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,10 +52,22 @@
       <file leaf-file-name="email.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/email.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="11" />
+            <state relative-caret-position="225">
+              <caret line="58" column="5" lean-forward="true" selection-start-line="58" selection-start-column="5" selection-end-line="58" selection-end-column="5" />
               <folding>
                 <element signature="e#15#146#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="9" column="52" lean-forward="false" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
+              <folding>
+                <element signature="e#14#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,9 +76,11 @@
       <file leaf-file-name="sendmail.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/basis/sendmail.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-391">
-              <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="248">
+              <caret line="50" column="1" lean-forward="true" selection-start-line="50" selection-start-column="1" selection-end-line="50" selection-end-column="1" />
+              <folding>
+                <element signature="e#15#79#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,16 +125,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="logger.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/basis/logger.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-490">
-              <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -141,6 +143,7 @@
       <find>sto</find>
       <find>store</find>
       <find>Before Store ela program</find>
+      <find>sea</find>
       <find>fmt</find>
     </findStrings>
   </component>
@@ -163,10 +166,11 @@
         <option value="$PROJECT_DIR$/routers/router.go" />
         <option value="$PROJECT_DIR$/conf/app.conf" />
         <option value="$PROJECT_DIR$/basis/writefile.go" />
-        <option value="$PROJECT_DIR$/basis/sendmail.go" />
-        <option value="$PROJECT_DIR$/views/email.go" />
         <option value="$PROJECT_DIR$/controllers/email.go" />
+        <option value="$PROJECT_DIR$/basis/sendmail.go" />
         <option value="$PROJECT_DIR$/views/bussinessthreshold.go" />
+        <option value="$PROJECT_DIR$/views/email.go" />
+        <option value="$PROJECT_DIR$/test.go" />
       </list>
     </option>
   </component>
@@ -203,41 +207,6 @@
             <path>
               <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
               <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="basis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="routers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SendAlarm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendAlarm" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -315,7 +284,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3565">
           <caret line="162" column="0" lean-forward="false" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#15#119#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -397,7 +368,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2323">
           <caret line="108" column="37" lean-forward="false" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="e#15#119#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -606,24 +579,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/basis/sendmail.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-391">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/email.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="11" />
-          <folding>
-            <element signature="e#15#146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/busconf.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -642,11 +597,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/basis/sendmail.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="50" column="1" lean-forward="true" selection-start-line="50" selection-start-column="1" selection-end-line="50" selection-end-column="1" />
+          <folding>
+            <element signature="e#15#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/email.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="58" column="5" lean-forward="true" selection-start-line="58" selection-start-column="5" selection-end-line="58" selection-end-column="5" />
+          <folding>
+            <element signature="e#15#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="52" lean-forward="false" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
+          <folding>
+            <element signature="e#14#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/bussinessthreshold.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="14" lean-forward="true" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="133">
+          <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding>
+            <element signature="e#15#119#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

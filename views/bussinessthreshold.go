@@ -45,7 +45,7 @@ type UpdateResult struct {
 }
 
 //这里将传入的值进行判断，如果存在就舍弃。
-func SearchBussinessItem(b *BussinessThreshold) (total int64,scope int64,err error,idname string){
+func SearchBussinessItem(b *BussinessThreshold) (total int64,scope,threshold int64,err error,idname string){
 	var s []term
 	s = append(s,term{"term":{"FirstBussiness.keyword":{"value":b.FirstBussiness}}})
 	s = append(s,term{"term":{"SecondBussiness.keyword":{"value":b.SecondBussiness}}})
@@ -54,41 +54,41 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,scope int64,err err
 	bytesDate,err := json.Marshal(t)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,0,err,""
+		return 0,0,threshold,err,""
 	}
 	reader := bytes.NewReader([]byte(bytesDate))
 	request, err := http.NewRequest("POST", basis.Business_url, reader)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,0,err,""
+		return 0,0,threshold,err,""
 	}
 	client := http.Client{}
 	resp, err := client.Do(request)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,0,err,""
+		return 0,0,threshold,err,""
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,0,err,""
+		return 0,0,threshold,err,""
 	}
-	total,scope,err = ParserTotalJson(respBytes)
+	total,scope,threshold,err = ParserTotalJson(respBytes)
 	if err != nil {
 		basis.Log.Error(err.Error())
-		return 0,scope,err,""
+		return 0,scope,threshold,err,""
 	}
 	idname,err = ParserIdJson(respBytes)
 	if err != nil{
 		basis.Log.Error(err.Error())
-		return total,scope,err,""
+		return total,scope,threshold,err,""
 	}
-	return total,scope,nil,idname
+	return total,scope,threshold,nil,idname
 }
 
 //这里将配置更新到日志中，通过logstash更新到es中
 func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
-	length,_,err,_ :=SearchBussinessItem(b)
+	length,_,_,err,_ :=SearchBussinessItem(b)
 	if length >=1{
 		basis.Log.Warning("已存在，跳过")
 		return errors.New("已经存在，将忽略")
@@ -111,7 +111,7 @@ func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 
 //这里更新es上已经存在的记录，如果不存在，就插入到es中
 func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
-	total,_,err,_ := SearchBussinessItem(b)
+	total,_,_,err,_ := SearchBussinessItem(b)
 	if err != err{
 		return err
 	}
@@ -160,12 +160,12 @@ func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 }
 
 //这里得到总数，如果是搜索业务的范围时间，会返回scope进行判断
-func ParserTotalJson(Total []byte)(total int64,scope int64,err error){
+func ParserTotalJson(Total []byte)(total int64,scope,threshold int64,err error){
 	var code Code
 	err = json.Unmarshal(Total,&code)
 
 	if err != nil {
-		return 0,scope,nil
+		return 0,scope,threshold,nil
 	}
 	switch v := code.Hits["total"].(type){
 	case int:
@@ -182,7 +182,7 @@ func ParserTotalJson(Total []byte)(total int64,scope int64,err error){
 						switch w3 := w2["Scope"].(type) {
 						case int:
 							scope = int64(w3)
-							return total,scope,nil
+							return total,scope,threshold,nil
 						}
 					}
 				}	
@@ -193,7 +193,7 @@ func ParserTotalJson(Total []byte)(total int64,scope int64,err error){
 	default:
 		total = 0
 	}
-	return total,scope,err
+	return total,scope,threshold,err
 }
 
 //这里得到Update需要的doc id
