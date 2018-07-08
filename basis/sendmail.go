@@ -37,6 +37,7 @@ func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs
 	}
 	fmt.Println(to)
 	for i:= 0;i<len(to);i++{
+		/*
 		go func(){
 			fmt.Println(i)
 			fmt.Println(to[i])
@@ -49,5 +50,9 @@ func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs
 				l.Error(msg)
 			}
 		}()
+		*/
+		fmt.Println(to[i])
 	}
 }
+
+
