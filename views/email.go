@@ -58,14 +58,7 @@ func SendInit(e EmailType) (errcode int,err error){
 // 这里与阈值对比，然后决定发邮件
 func SendEmails(e *EmailType)(code int64,err error){
 	fmt.Println("sending program begin")
-	var thres *BussinessThreshold
-	fmt.Println("1")
-	fmt.Println(e.FirstBussiness,e.SecondBussiness,e.ThirdBussiness)
-	thres.ThirdBussiness = e.ThirdBussiness
-	fmt.Println("2")
-	thres.SecondBussiness = e.SecondBussiness
-	fmt.Println("3")
-	thres.FirstBussiness = e.FirstBussiness
+	thres := &BussinessThreshold{e.FirstBussiness,e.SecondBussiness,e.ThirdBussiness,0,0}
 	fmt.Println("Begin SearchBussinessItem")
 	threshold,scope,err,_ := SearchBussinessItem(thres)
 	fmt.Println("After SearchBussinessItem")
