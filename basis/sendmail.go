@@ -4,7 +4,6 @@ import(
 	"gopkg.in/gomail.v2"
 	"github.com/astaxie/beego/logs"
 	"fmt"
-	"SendAlarm/models"
 )
 
 type Email_Server struct {
