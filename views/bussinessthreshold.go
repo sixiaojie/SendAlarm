@@ -7,7 +7,6 @@ import(
 	"net/http"
 	"io/ioutil"
 	"github.com/pkg/errors"
-	"fmt"
 )
 
 type value map[string]string
@@ -53,8 +52,6 @@ func SearchBussinessItem(b *BussinessThreshold) (total int64,scope,threshold int
 	s = append(s,term{"term":{"ThirdBussiness":{"value":b.ThirdBussiness}}})
 	t := query{"query":{"bool":{"must":s}}}
 	bytesDate,err := json.Marshal(t)
-	fmt.Println(bytesDate)
-	fmt.Println(string(bytesDate))
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return 0,0,threshold,err,""
@@ -183,7 +180,7 @@ func ParserTotalJson(Total []byte)(total int64,scope,threshold int64,err error){
 					switch w2 := w1["_source"].(type) {
 					case map[string]interface{}:
 						switch w3 := w2["Scope"].(type) {
-						case int:
+						case float64:
 							scope = int64(w3)
 							return total,scope,threshold,nil
 						}
@@ -203,7 +200,6 @@ func ParserTotalJson(Total []byte)(total int64,scope,threshold int64,err error){
 func ParserIdJson(body []byte)(id string,err error){
 	var code Code
 	err = json.Unmarshal(body,&code)
-	fmt.Println(code)
 	if err != nil {
 		return "",nil
 	}
