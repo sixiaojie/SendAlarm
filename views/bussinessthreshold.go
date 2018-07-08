@@ -182,6 +182,11 @@ func ParserTotalJson(Total []byte)(total int64,scope,threshold int64,err error){
 						switch w3 := w2["Scope"].(type) {
 						case float64:
 							scope = int64(w3)
+							switch w4 :=w2["Threshold"].(type) {
+							case float64:
+								threshold = int64(w4)
+								return total,scope,threshold,nil
+							}
 							return total,scope,threshold,nil
 						}
 					}
