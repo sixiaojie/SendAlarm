@@ -133,6 +133,8 @@ func SearchElasticsearch(e *EmailType,scope int64)(times int64,err error){
 		basis.Log.Error(err.Error())
 		return 5044,err
 	}
+	fmt.Println(basis.Alarm_url)
+	fmt.Println(string(respBytes))
 	times,scope,_,err = ParserTotalJson(respBytes)
 	if err != nil{
 		return 5042,err
