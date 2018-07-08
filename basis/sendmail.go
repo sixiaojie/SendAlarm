@@ -31,16 +31,17 @@ func (e *Email_Server) SendMail(alias,subject,body string,to,cc []string,l *logs
 		to = append(to,cc[i])
 	}
 	for i:= 0;i<len(to);i++{
-		go Email_Accept(e,l,alias,subject,to[i])
+		go Email_Accept(e,l,alias,subject,to[i],body)
 	}
 }
 
-func Email_Accept(e *Email_Server,l *logs.BeeLogger,alias,subject,user string){
+func Email_Accept(e *Email_Server,l *logs.BeeLogger,alias,subject,user,msg string){
 	e.init(l)
 	m := gomail.NewMessage()
 	m.SetAddressHeader("From",e.User,alias)
 	m.SetHeader("To",user)
 	m.SetHeader("Subject", subject)
+	m.SetBody("text/html", msg)
 	d := gomail.NewDialer(e.Host, e.Port, e.User, e.Password)
 	if err := d.DialAndSend(m); err != nil {
 		//Writefile("Sendmail "+to,errors.New("success"))
