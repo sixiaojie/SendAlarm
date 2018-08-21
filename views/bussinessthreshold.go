@@ -47,9 +47,9 @@ type UpdateResult struct {
 //这里将传入的值进行判断，如果存在就舍弃。
 func SearchBussinessItem(b *BussinessThreshold) (total int64,scope,threshold int64,err error,idname string){
 	var s []term
-	s = append(s,term{"term":{"FirstBussiness":{"value":b.FirstBussiness}}})
-	s = append(s,term{"term":{"SecondBussiness":{"value":b.SecondBussiness}}})
-	s = append(s,term{"term":{"ThirdBussiness":{"value":b.ThirdBussiness}}})
+	s = append(s,term{"term":{"FirstBussiness.keyword":{"value":b.FirstBussiness}}})
+	s = append(s,term{"term":{"SecondBussiness.keyword":{"value":b.SecondBussiness}}})
+	s = append(s,term{"term":{"ThirdBussiness.keyword":{"value":b.ThirdBussiness}}})
 	t := query{"query":{"bool":{"must":s}}}
 	bytesDate,err := json.Marshal(t)
 	if err != nil {
@@ -111,7 +111,7 @@ func InsertBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 
 //这里更新es上已经存在的记录，如果不存在，就插入到es中
 func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
-	total,_,_,err,_ := SearchBussinessItem(b)
+	total,_,_,err,idname := SearchBussinessItem(b)
 	if err != err{
 		return err
 	}
@@ -125,18 +125,22 @@ func UpdateBussinessItemElasticsearch(b *BussinessThreshold)(err error){
 		}
 		return nil
 	}
+	temp_inside := make(map[string]int)
 	temp := make(map[string]map[string]int)
-	temp["doc"]["Threshold"] = b.Threshold
+	temp_inside["Threshold"] = b.Threshold
+	temp_inside["Scope"] = 0
 	if b.Scope !=0 {
-		temp["doc"]["Scope"] = b.Scope
+		temp_inside["Scope"] = b.Scope
 	}
+	temp["doc"] = temp_inside
 	bytesDate,err := json.Marshal(temp)
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return err
 	}
 	reader := bytes.NewReader([]byte(bytesDate))
-	request, err := http.NewRequest("POST", basis.Business_url, reader)
+	url := basis.Update_url+idname+"/_update"
+	request, err := http.NewRequest("POST", url, reader)
 	if err != nil {
 		basis.Log.Error(err.Error())
 		return err
@@ -247,3 +251,4 @@ func UpdateThresholdReturnResult(b []byte)(err error){
 	}
 	return errors.New("修改失败")
 }
+

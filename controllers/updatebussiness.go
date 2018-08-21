@@ -31,6 +31,7 @@ func (u *BuissnessController) Update(){
 	var buss views.BussinessThreshold
 	var sr views.Base
 	SR := make(map[string]interface{})
+	json.Unmarshal(u.Ctx.Input.RequestBody, &buss)
 	err := views.UpdateBussinessItemElasticsearch(&buss)
 	if err != nil {
 		SR["message"] = err.Error()
